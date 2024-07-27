@@ -52,25 +52,7 @@ const Index = () => {
         Infographic makes it easier for readers to absorb chunks of information. Shortly explain here what will this infographic cover.
       </p>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-24">
-        <Card className="col-span-1 lg:col-span-2 xl:col-span-3">
-          <CardHeader>
-            <CardTitle>Data 5: Historical Trend</CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={historicalData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="value" stroke="#8884d8" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
+      <div className="grid grid-cols-1 gap-8 mb-24">
         <Card className="bg-[#f3d9fa] border-none shadow-none">
           <CardHeader>
             <CardTitle className="text-[#5a189a]">Data 1</CardTitle>
@@ -160,12 +142,29 @@ const Index = () => {
         <CardContent>
           <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
           <div className="flex justify-center items-center">
-            <div className="relative w-48 h-24">
-              <svg className="w-48 h-48 -rotate-90 transform" viewBox="0 0 100 100">
-                <circle className="text-gray-200" strokeWidth="10" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
-                <circle className="text-[#ff5e5b]" strokeWidth="10" strokeDasharray={`${gaugeValue * 2.51327} 251.327`} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+            <div className="relative w-[280px] h-[140px]">
+              <svg className="w-full h-full" viewBox="0 0 280 140">
+                <defs>
+                  <clipPath id="clippath">
+                    <path d="M0,140C0,62.68,62.68,0,140,0s140,62.68,140,140h-50.4c0-49.48-40.11-89.6-89.6-89.6s-89.6,40.11-89.6,89.6H0Z"/>
+                  </clipPath>
+                </defs>
+                <rect className="fill-white" x="-28" y="-14" width="336" height="168"/>
+                <g clipPath="url(#clippath)">
+                  <rect className="fill-[#ff5732]" x="-28" y="-14" width="336" height="168"/>
+                </g>
               </svg>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+              <div 
+                className="absolute top-0 left-1/2 w-[29.5px] h-[127px] origin-bottom-center transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-50%) rotate(${(gaugeValue / 100) * 180 - 90}deg)` }}
+              >
+                <svg viewBox="0 0 29.5 127">
+                  <g>
+                    <path d="M28.3,113.2c0,7.7-6.3,13.9-14,13.8c-7.7,0-13.9-6.3-13.8-14L12.1,3.2c0-1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.5,2.8,0c0.9,0.5,1.4,1.4,1.4,2.4L28.3,113.2z" fill="#563AEF"/>
+                  </g>
+                </svg>
+              </div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center">
                 <span className="text-3xl font-bold text-[#5a189a]">{gaugeValue}%</span>
                 <Slider
                   value={[gaugeValue]}

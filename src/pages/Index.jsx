@@ -1,13 +1,22 @@
 // Update this page (the content is just a fallback if you fail to update the page)
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import { BarChart, LineChart, PieChart } from 'recharts';
-import { LightbulbIcon, TargetIcon, WrenchIcon, SearchIcon } from 'lucide-react';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LightbulbIcon, TargetIcon, WrenchIcon, SearchIcon, TrendingUpIcon } from 'lucide-react';
 
 const Index = () => {
   const [gaugeValue, setGaugeValue] = useState(50);
+  const [historicalData, setHistoricalData] = useState([]);
+
+  useEffect(() => {
+    const newDataPoint = {
+      time: new Date().toLocaleTimeString(),
+      value: gaugeValue
+    };
+    setHistoricalData(prevData => [...prevData.slice(-9), newDataPoint]);
+  }, [gaugeValue]);
 
   const data1 = [
     { name: 'Step 1', value: 25 * gaugeValue / 100 },
@@ -42,7 +51,25 @@ const Index = () => {
         This interactive dashboard showcases various data visualizations that respond to the gauge controller.
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-24">
+        <Card className="col-span-1 lg:col-span-2 xl:col-span-3">
+          <CardHeader>
+            <CardTitle>Data 5: Historical Trend</CardTitle>
+          </CardHeader>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={historicalData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>Data 1: Process Steps</CardTitle>
@@ -72,10 +99,17 @@ const Index = () => {
           <CardHeader>
             <CardTitle>Data 2: Item Comparison</CardTitle>
           </CardHeader>
-          <CardContent>
-            <BarChart width={400} height={200} data={data2}>
-              <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data2}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
@@ -83,19 +117,23 @@ const Index = () => {
           <CardHeader>
             <CardTitle>Data 3: Group Distribution</CardTitle>
           </CardHeader>
-          <CardContent>
-            <PieChart width={400} height={200}>
-              <Pie
-                data={data3}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-              />
-            </PieChart>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data3}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                />
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
@@ -124,19 +162,22 @@ const Index = () => {
 
       <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Data 5: Gauge Controller</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Gauge Controller</CardTitle>
+            <TrendingUpIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
+            <div className="text-2xl font-bold">{gaugeValue}%</div>
             <Slider
               value={[gaugeValue]}
               onValueChange={(value) => setGaugeValue(value[0])}
               max={100}
               step={1}
+              className="mt-2"
             />
-            <div className="mt-2 text-center text-sm font-medium">
-              Current Value: {gaugeValue}%
-            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Adjust the slider to see real-time changes in the dashboard
+            </p>
           </CardContent>
         </Card>
       </div>

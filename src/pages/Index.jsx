@@ -76,21 +76,27 @@ const Index = () => {
 
         <Card className="bg-[#f3d9fa] border-none shadow-none">
           <CardHeader>
-            <CardTitle className="text-[#5a189a]">Data 2</CardTitle>
+            <CardTitle className="text-[#5a189a] bg-[#7b2cbf] text-white px-4 py-2 rounded-full inline-block">Data 2</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data2} layout="vertical">
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" hide />
-                  <Tooltip />
-                  <Bar dataKey="value1" stackId="a" fill="#ffa62b" />
-                  <Bar dataKey="value2" stackId="a" fill="#ff5e5b" />
-                  <Bar dataKey="value3" stackId="a" fill="#9d4edd" />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="space-y-2">
+              {['Item 1', 'Item 2', 'Item 3', 'Item 4'].map((item, index) => (
+                <div key={item} className="flex items-center">
+                  <span className="w-12 text-sm font-medium text-[#5a189a]">{item}</span>
+                  <div className="flex-1 h-6 bg-white rounded-full overflow-hidden">
+                    <div className="flex h-full">
+                      <div className="bg-[#ffa62b]" style={{ width: `${(gaugeValue / 100) * 10}%` }}></div>
+                      <div className="bg-[#ff5e5b]" style={{ width: `${(gaugeValue / 100) * 10}%` }}></div>
+                      <div className="bg-[#9d4edd]" style={{ width: `${(gaugeValue / 100) * 15}%` }}></div>
+                      <div className="bg-[#3c096c]" style={{ width: `${(gaugeValue / 100) * 15}%` }}></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 text-right text-sm font-medium text-[#5a189a]">
+              0 10 20 30 40 50
             </div>
           </CardContent>
         </Card>
@@ -135,49 +141,47 @@ const Index = () => {
         </Card>
       </div>
 
-      <Card className="bg-[#f3d9fa] border-none shadow-none mt-8">
-        <CardHeader>
-          <CardTitle className="text-[#5a189a]">Data 5</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
-          <div className="flex justify-center items-center">
-            <div className="relative w-[280px] h-[140px]">
-              <svg className="w-full h-full" viewBox="0 0 280 140">
-                <defs>
-                  <clipPath id="clippath">
-                    <path d="M0,140C0,62.68,62.68,0,140,0s140,62.68,140,140h-50.4c0-49.48-40.11-89.6-89.6-89.6s-89.6,40.11-89.6,89.6H0Z"/>
-                  </clipPath>
-                </defs>
-                <rect className="fill-white" x="-28" y="-14" width="336" height="168"/>
-                <g clipPath="url(#clippath)">
-                  <rect className="fill-[#ff5732]" x="-28" y="-14" width="336" height="168"/>
-                </g>
-              </svg>
-              <div 
-                className="absolute top-0 left-1/2 w-[29.5px] h-[127px] origin-bottom-center transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-50%) rotate(${(gaugeValue / 100) * 180 - 90}deg)` }}
-              >
-                <svg viewBox="0 0 29.5 127">
-                  <g>
-                    <path d="M28.3,113.2c0,7.7-6.3,13.9-14,13.8c-7.7,0-13.9-6.3-13.8-14L12.1,3.2c0-1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.5,2.8,0c0.9,0.5,1.4,1.4,1.4,2.4L28.3,113.2z" fill="#563AEF"/>
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10">
+        <Card className="bg-[#f3d9fa] border-none shadow-lg">
+          <CardContent className="p-4">
+            <div className="flex justify-center items-center">
+              <div className="relative w-[280px] h-[140px]">
+                <svg className="w-full h-full" viewBox="0 0 280 140">
+                  <defs>
+                    <clipPath id="clippath">
+                      <path d="M0,140C0,62.68,62.68,0,140,0s140,62.68,140,140h-50.4c0-49.48-40.11-89.6-89.6-89.6s-89.6,40.11-89.6,89.6H0Z"/>
+                    </clipPath>
+                  </defs>
+                  <rect className="fill-white" x="-28" y="-14" width="336" height="168"/>
+                  <g clipPath="url(#clippath)">
+                    <rect className="fill-[#ff5732]" x="-28" y="-14" width="336" height="168"/>
                   </g>
                 </svg>
-              </div>
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center">
-                <span className="text-3xl font-bold text-[#5a189a]">{gaugeValue}%</span>
-                <Slider
-                  value={[gaugeValue]}
-                  onValueChange={(value) => setGaugeValue(value[0])}
-                  max={100}
-                  step={1}
-                  className="w-32 mt-2"
-                />
+                <div 
+                  className="absolute top-0 left-1/2 w-[29.5px] h-[127px] origin-bottom-center transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-50%) rotate(${(gaugeValue / 100) * 180 - 90}deg)` }}
+                >
+                  <svg viewBox="0 0 29.5 127">
+                    <g>
+                      <path d="M28.3,113.2c0,7.7-6.3,13.9-14,13.8c-7.7,0-13.9-6.3-13.8-14L12.1,3.2c0-1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.5,2.8,0c0.9,0.5,1.4,1.4,1.4,2.4L28.3,113.2z" fill="#563AEF"/>
+                    </g>
+                  </svg>
+                </div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-center">
+                  <span className="text-3xl font-bold text-[#5a189a]">{gaugeValue}%</span>
+                  <Slider
+                    value={[gaugeValue]}
+                    onValueChange={(value) => setGaugeValue(value[0])}
+                    max={100}
+                    step={1}
+                    className="w-32 mt-2"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

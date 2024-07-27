@@ -45,10 +45,11 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background p-8 relative">
-      <h1 className="text-4xl font-bold text-center mb-8">Informational Data Dashboard</h1>
-      <p className="text-center mb-8 text-muted-foreground">
-        This interactive dashboard showcases various data visualizations that respond to the gauge controller.
+    <div className="min-h-screen bg-[#f8f0ff] p-8 relative">
+      <h1 className="text-4xl font-bold text-center mb-4 text-[#5a189a]">It's all about the</h1>
+      <h2 className="text-5xl font-bold text-center mb-4 text-[#5a189a]">Informational Data Infographic</h2>
+      <p className="text-center mb-8 text-[#7b2cbf] max-w-2xl mx-auto">
+        Infographic makes it easier for readers to absorb chunks of information. Shortly explain here what will this infographic cover.
       </p>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-24">
@@ -70,117 +71,114 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-[#f3d9fa] border-none shadow-none">
           <CardHeader>
-            <CardTitle>Data 1: Process Steps</CardTitle>
+            <CardTitle className="text-[#5a189a]">Data 1</CardTitle>
           </CardHeader>
-          <CardContent className="flex items-center justify-center">
-            <div className="flex items-center space-x-4">
-              {data1.map((item, index) => (
+          <CardContent>
+            <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
+            <div className="flex items-center justify-between">
+              {['Step 1', 'Step 2', 'Step 3', 'Step 4'].map((step, index) => (
+                <div key={step} className="flex flex-col items-center">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-2 ${
+                    ['bg-[#ffa62b]', 'bg-[#ff5e5b]', 'bg-[#9d4edd]', 'bg-[#3c096c]'][index]
+                  }`}>
+                    {[<LightbulbIcon />, <TargetIcon />, <WrenchIcon />, <SearchIcon />][index]}
+                  </div>
+                  <span className="text-sm font-medium text-[#5a189a]">{step}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-[#f3d9fa] border-none shadow-none">
+          <CardHeader>
+            <CardTitle className="text-[#5a189a]">Data 2</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data2} layout="vertical">
+                  <XAxis type="number" hide />
+                  <YAxis dataKey="name" type="category" hide />
+                  <Tooltip />
+                  <Bar dataKey="value1" stackId="a" fill="#ffa62b" />
+                  <Bar dataKey="value2" stackId="a" fill="#ff5e5b" />
+                  <Bar dataKey="value3" stackId="a" fill="#9d4edd" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-[#f3d9fa] border-none shadow-none">
+          <CardHeader>
+            <CardTitle className="text-[#5a189a]">Data 3</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
+            <div className="grid grid-cols-6 gap-2">
+              {Array.from({ length: 24 }, (_, i) => (
+                <svg key={i} className={`w-8 h-8 ${i < 8 ? 'text-[#ffa62b]' : i < 16 ? 'text-[#ff5e5b]' : 'text-[#9d4edd]'}`} fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-[#f3d9fa] border-none shadow-none">
+          <CardHeader>
+            <CardTitle className="text-[#5a189a]">Data 4</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
+            <div className="flex justify-between">
+              {data4.map((item, index) => (
                 <div key={item.name} className="flex flex-col items-center">
-                  {index === 0 && <LightbulbIcon className="w-8 h-8 text-yellow-500 mb-2" />}
-                  {index === 1 && <TargetIcon className="w-8 h-8 text-red-500 mb-2" />}
-                  {index === 2 && <WrenchIcon className="w-8 h-8 text-purple-500 mb-2" />}
-                  {index === 3 && <SearchIcon className="w-8 h-8 text-blue-500 mb-2" />}
-                  <div className="w-16 bg-secondary rounded-full">
-                    <div
-                      className="bg-primary rounded-full"
-                      style={{ width: `${item.value}%`, height: '8px' }}
-                    ></div>
+                  <div className="relative w-24 h-12 mb-2">
+                    <svg className="w-24 h-24 -rotate-90 transform" viewBox="0 0 100 100">
+                      <circle className="text-gray-200" strokeWidth="10" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+                      <circle className={`${['text-[#ffa62b]', 'text-[#ff5e5b]', 'text-[#9d4edd]'][index]}`} strokeWidth="10" strokeDasharray={`${item.value * 2.51327} 251.327`} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+                    </svg>
+                    <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-[#5a189a]">{item.value}%</span>
                   </div>
-                  <span className="mt-2 text-sm font-medium">{item.name}</span>
+                  <span className="text-sm font-medium text-[#5a189a]">{item.name}</span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
+      </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Data 2: Item Comparison</CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data2}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="value" fill="#8884d8" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Data 3: Group Distribution</CardTitle>
-          </CardHeader>
-          <CardContent className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={data3}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  fill="#8884d8"
-                  label
+      <Card className="bg-[#f3d9fa] border-none shadow-none mt-8">
+        <CardHeader>
+          <CardTitle className="text-[#5a189a]">Data 5</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-[#7b2cbf] mb-4">Include data like percentages and average. It helps the reader get insight about the topic.</p>
+          <div className="flex justify-center items-center">
+            <div className="relative w-48 h-24">
+              <svg className="w-48 h-48 -rotate-90 transform" viewBox="0 0 100 100">
+                <circle className="text-gray-200" strokeWidth="10" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+                <circle className="text-[#ff5e5b]" strokeWidth="10" strokeDasharray={`${gaugeValue * 2.51327} 251.327`} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50"/>
+              </svg>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                <span className="text-3xl font-bold text-[#5a189a]">{gaugeValue}%</span>
+                <Slider
+                  value={[gaugeValue]}
+                  onValueChange={(value) => setGaugeValue(value[0])}
+                  max={100}
+                  step={1}
+                  className="w-32 mt-2"
                 />
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Data 4: Performance Metrics</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {data4.map((item) => (
-                <div key={item.name} className="flex items-center">
-                  <span className="w-20 text-sm font-medium">{item.name}</span>
-                  <div className="flex-1 h-4 bg-secondary rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary"
-                      style={{ width: `${item.value}%` }}
-                    ></div>
-                  </div>
-                  <span className="w-12 text-right text-sm font-medium">{item.value.toFixed(0)}%</span>
-                </div>
-              ))}
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Gauge Controller</CardTitle>
-            <TrendingUpIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{gaugeValue}%</div>
-            <Slider
-              value={[gaugeValue]}
-              onValueChange={(value) => setGaugeValue(value[0])}
-              max={100}
-              step={1}
-              className="mt-2"
-            />
-            <p className="text-xs text-muted-foreground mt-2">
-              Adjust the slider to see real-time changes in the dashboard
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
